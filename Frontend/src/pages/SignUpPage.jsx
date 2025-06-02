@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { ShipWheelIcon } from "lucide-react";
+import { ShipWheelIcon, EyeOff, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSignup } from "../hooks/useSignup";
 
-
 export const SignUpPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [sigupData, setSignupData] = useState({
     fullName: "",
     email: "",
@@ -22,7 +22,7 @@ export const SignUpPage = () => {
   //   onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
   // });
 
-  const {isPending, error, signupMutation} = useSignup();
+  const { isPending, error, signupMutation } = useSignup();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -92,7 +92,7 @@ export const SignUpPage = () => {
 
                     <input
                       type="email"
-                      placeholder="dinesh@gmail.com"
+                      placeholder="hello@gmail.com"
                       className="input input-bordered w-full"
                       value={sigupData.email}
                       onChange={(e) =>
@@ -103,15 +103,15 @@ export const SignUpPage = () => {
                   </div>
 
                   {/* PASSWORD */}
-                  <div className="form-control w-full">
+                  <div className="form-control w-full relative">
                     <label className="label">
                       <span className="label-text">Password</span>
                     </label>
 
                     <input
-                      type="password"
-                      placeholder="********"
-                      className="input input-bordered w-full"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      className="input input-bordered w-full pr-10"
                       value={sigupData.password}
                       onChange={(e) =>
                         setSignupData({
@@ -121,6 +121,14 @@ export const SignUpPage = () => {
                       }
                       required
                     />
+
+                    {/* Icon positioned inside input field */}
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-5 top-[50%] cursor-pointer text-gray-500"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
 
                     <p className="text-xs opacity-70 mt-1">
                       Password must be at least 8 characters long

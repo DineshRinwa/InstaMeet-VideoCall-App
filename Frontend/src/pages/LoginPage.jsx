@@ -1,27 +1,28 @@
 import { useState } from "react";
-import { ShipWheelIcon } from "lucide-react";
+import { ShipWheelIcon, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 
 export const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-//   const queryClient = useQueryClient();
+  //   const queryClient = useQueryClient();
 
-// THIS IS HOW WE DID IT, WITHOUT USING OUR CUSTOM HOOK
-//   const {
-//     mutate: loginMutation,
-//     isPending,
-//     error,
-//   } = useMutation({
-//     mutationFn: login,
-//     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
-//   });
+  // THIS IS HOW WE DID IT, WITHOUT USING OUR CUSTOM HOOK
+  //   const {
+  //     mutate: loginMutation,
+  //     isPending,
+  //     error,
+  //   } = useMutation({
+  //     mutationFn: login,
+  //     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+  //   });
 
-const { isPending, error, loginMutation } = useLogin();
+  const { isPending, error, loginMutation } = useLogin();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -81,22 +82,39 @@ const { isPending, error, loginMutation } = useLogin();
                   </div>
 
                   {/* PASSWORD */}
-                  <div className="form-control w-full space-y-2">
+                  <div className="form-control w-full space-y-2 relative">
+                    {/* LABEL */}
                     <label className="label">
                       <span className="label-text">Password</span>
                     </label>
+
+                    {/* PASSWORD INPUT */}
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
-                      className="input input-bordered w-full"
+                      className="input input-bordered w-full pr-10"
                       value={loginData.password}
-                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                      onChange={(e) =>
+                        setLoginData({ ...loginData, password: e.target.value })
+                      }
                       required
                     />
+
+                    {/* EYE TOGGLE ICON */}
+                    <span
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-3 top-[52px] cursor-pointer text-gray-500"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
                   </div>
 
                   {/* SIGN IN BUTTON */}
-                  <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full"
+                    disabled={isPending}
+                  >
                     {isPending ? (
                       <>
                         <span className="loading loading-spinner loading-xs"></span>
@@ -111,7 +129,10 @@ const { isPending, error, loginMutation } = useLogin();
                   <div className="text-center mt-4">
                     <p className="text-sm">
                       Don't have an account?{" "}
-                      <Link to="/signup" className="text-primary hover:underline">
+                      <Link
+                        to="/signup"
+                        className="text-primary hover:underline"
+                      >
                         Create one
                       </Link>
                     </p>
@@ -127,13 +148,20 @@ const { isPending, error, loginMutation } = useLogin();
           <div className="max-w-md p-8">
             {/* Illustration */}
             <div className="relative aspect-square max-w-sm mx-auto">
-              <img src="/i.svg" alt="Language connection illustration" className="w-full h-full" />
+              <img
+                src="/i.svg"
+                alt="Language connection illustration"
+                className="w-full h-full"
+              />
             </div>
 
             <div className="text-center space-y-3 mt-6">
-              <h2 className="text-xl font-semibold">Connect with language partners worldwide</h2>
+              <h2 className="text-xl font-semibold">
+                Connect with language partners worldwide
+              </h2>
               <p className="opacity-70">
-                Practice conversations, make friends, and improve your language skills together
+                Practice conversations, make friends, and improve your language
+                skills together
               </p>
             </div>
           </div>

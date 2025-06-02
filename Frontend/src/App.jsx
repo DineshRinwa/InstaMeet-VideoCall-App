@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { HomePage } from "./pages/HomePage";
+import { DefaultHomePage } from "./pages/DefaultHomePage.jsx";
 import { SignUpPage } from "./pages/SignUpPage";
 import { LoginPage } from "./pages/LoginPage";
 import { CallPage } from "./pages/CallPage";
@@ -29,14 +30,14 @@ export const App = () => {
     <div className="h-screen" data-theme={theme}>
       <Routes>
         <Route
-          path="/"
+          path="/deshboard"
           element={
             isAuthenticated && isOnboarded ? (
               <Layout showSidebar={true}>
                 <HomePage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/" : "/onboarding"} />
             )
           }
         />
@@ -47,7 +48,18 @@ export const App = () => {
             !isAuthenticated ? (
               <SignUpPage />
             ) : (
-              <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+              <Navigate to={isOnboarded ? "/deshboard" : "/onboarding"} />
+            )
+          }
+        />
+
+        <Route
+          path="/"
+          element={
+            !isAuthenticated ? (
+              <DefaultHomePage />
+            ) : (
+              <Navigate to={isOnboarded ? "/deshboard" : "/onboarding"} />
             )
           }
         />
@@ -58,7 +70,7 @@ export const App = () => {
             !isAuthenticated ? (
               <LoginPage />
             ) : (
-              <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+              <Navigate to={isOnboarded ? "/deshboard" : "/onboarding"} />
             )
           }
         />
@@ -71,7 +83,7 @@ export const App = () => {
                 <NotificationsPage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/" : "/onboarding"} />
             )
           }
         />
@@ -82,7 +94,7 @@ export const App = () => {
             isAuthenticated && isOnboarded ? (
               <CallPage />
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/" : "/onboarding"} />
             )
           }
         />
@@ -95,7 +107,7 @@ export const App = () => {
                 <ChatPage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/" : "/onboarding"} />
             )
           }
         />
@@ -107,10 +119,10 @@ export const App = () => {
               !isOnboarded ? (
                 <OnboardingPage />
               ) : (
-                <Navigate to="/" />
+                <Navigate to="/deshboard" />
               )
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
