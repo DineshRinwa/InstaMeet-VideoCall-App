@@ -60,7 +60,7 @@ export const Signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: "None",
-      secure:  true,
+      secure: true,
     });
 
     res.status(201).json({ sucess: true, user: newUser });
@@ -105,7 +105,11 @@ export const Login = async (req, res) => {
 };
 
 export const Logout = async (req, res) => {
-  res.clearCookie("jwt");
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "None",
+    secure: true,
+  });
   res.status(200).json({ success: true, messsage: "logout successful" });
 };
 
