@@ -59,8 +59,8 @@ export const Signup = async (req, res) => {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: "Strict",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+      secure:  true,
     });
 
     res.status(201).json({ sucess: true, user: newUser });
@@ -93,8 +93,8 @@ export const Login = async (req, res) => {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: "Strict",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+      secure: true,
     });
 
     res.status(200).json({ sucess: true, user });
